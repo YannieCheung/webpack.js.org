@@ -463,7 +463,7 @@ open: true
 webpack-dev-server --open
 ```
 
-If no browser is provided (as shown above), your default browser will be used. To specify a different browser, just pass its name:
+如果没有提供浏览器，打开默认浏览器。如果要指定一个不同的浏览器，只要把它名字传进去
 
 ```bash
 webpack-dev-server --open 'Google Chrome'
@@ -474,13 +474,13 @@ webpack-dev-server --open 'Google Chrome'
 
 `string`
 
-Specify a page to navigate to when opening the browser.
+打开浏览器时导航到一个具体页面
 
 ```js
 openPage: '/different/page'
 ```
 
-Usage via the CLI
+在命令行使用
 
 ```bash
 webpack-dev-server --open-page "/different/page"
@@ -740,7 +740,7 @@ webpack-dev-server --socket socket
 
 ## `devServer.staticOptions`
 
-It is possible to configure advanced options for serving static files from `contentBase`. See the [Express documentation](http://expressjs.com/en/4x/api.html#express.static) for the possible options. An example:
+可以为从`contentBase`提供的静态页面提供高级选项配置，可以配置的选项参见[Express documentation](http://expressjs.com/en/4x/api.html#express.static)，例如：
 
 ```js
 staticOptions: {
@@ -748,7 +748,7 @@ staticOptions: {
 }
 ```
 
-T> This only works when using `contentBase` as a `string`.
+T> 这仅在`contentBase`为一个字符串时才工作。
 
 
 ## `devServer.stats` 🔑
@@ -768,7 +768,7 @@ For more information, see the [**stats documentation**](/configuration/stats).
 T> This option has no effect when used with `quiet` or `noInfo`.
 
 
-## `devServer.stdin` - CLI only
+## `devServer.stdin` - 仅CLI
 
 `boolean`
 
@@ -801,7 +801,6 @@ webpack-dev-server --useLocalIp
 `boolean`
 
 服务端监视在`devServer.contentBase`设置的文件， 文件改变触发页面刷新。
-Tell the server to watch the files served by the `devServer.contentBase` option. File changes will trigger a full page reload.
 
 ```js
 watchContentBase: true
