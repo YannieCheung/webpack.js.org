@@ -42,16 +42,16 @@ Content not from webpack is served from /path/to/dist/
 
 如果你通过 Node.js API 来使用 dev-server， `devServer` 中的选项将被忽略。将选项作为第二个参数传入： `new WebpackDevServer(compiler, {...})`。关于如何通过 Node.js API 使用 webpack-dev-server 的示例，请[查看此处](https://github.com/webpack/webpack-dev-server/tree/master/examples/api/simple)。
 
-W> Be aware that when [exporting multiple configurations](/configuration/configuration-types/#exporting-multiple-configurations) only the `devServer` options for the first configuration will be taken into account and used for all the configurations in the array.
+W> 请注意，当[导出多个配置](/configuration/configuration-types/#exporting-multiple-configurations)时，第一个配置中的`devServer`选项被用于数组中的所有配置。
 
-T> If you're having trouble, navigating to the `/webpack-dev-server` route will show where files are served. For example, `http://localhost:9000/webpack-dev-server`.
+T> 如果你有麻烦，导航到路由`/webpack-dev-server`以显示服务器上的文件，举个栗子，`http://localhost:9000/webpack-dev-server`.
+
 
 ## `devServer.after`
 
 `function`
 
-Provides the ability to execute custom middleware after all other middleware
-internally within the server.
+在服务端所有中间件执行之后，提供执行自定义中间件的能力。
 
 ```js
 after(app){
@@ -63,7 +63,7 @@ after(app){
 
 `array`
 
-This option allows you to whitelist services that are allowed to access the dev server.
+该选项允许你为那些可访问的开发服务端提供白名单
 
 ```js
 allowedHosts: [
@@ -74,20 +74,18 @@ allowedHosts: [
 ]
 ```
 
-Mimicking django's `ALLOWED_HOSTS`, a value beginning with `.` can be used as a subdomain wildcard. `.host.com` will match `host.com`, `www.host.com`, and any other subdomain of `host.com`.
+模拟Django的`ALLOWED_HOSTS`，以`.`开头的值将被当做一个子域名通配符，`.host.com`可以匹配`host.com`，`www.host.com`以及任何其他包含`host.com`子域名的域名。
 
 ```js
-// this achieves the same effect as the first example
-// with the bonus of not having to update your config
-// if new subdomains need to access the dev server
+//这个配置与上一个例子是同样的效果，如果新的子域名需要访问
+//服务器，好处就是无需更新你的配置
 allowedHosts: [
     '.host.com',
     'host2.com'
 ]
 ```
 
-To use this option with the CLI pass the `--allowed-hosts` option a comma-delimited string.
-
+在命令行中使用这个选项`--allowed-hosts`
 ```bash
 webpack-dev-server --entry /entry/file --output-path /output/path --allowed-hosts .host.com,host2.com
 ```
@@ -96,9 +94,7 @@ webpack-dev-server --entry /entry/file --output-path /output/path --allowed-host
 
 `function`
 
-Provides the ability to execute custom middleware prior to all other middleware
-internally within the server. This could be used to define custom handlers, for
-example:
+提供在服务端所有中间件执行之前执行自定义中间件的能力。这可以用来定义自定义函数。例如
 
 ```js
 before(app){
@@ -110,13 +106,14 @@ before(app){
 
 ## `devServer.bonjour`
 
-This option broadcasts the server via ZeroConf networking on start
+该选项开启时，通过零配置网络广播服务端
+（This option broadcasts the server via ZeroConf networking on start）
 
 ```js
 bonjour: true
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --bonjour
@@ -135,7 +132,7 @@ webpack-dev-server --bonjour
 clientLogLevel: "none"
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --client-log-level none
@@ -144,11 +141,11 @@ webpack-dev-server --client-log-level none
 可能的值有 `none`, `error`, `warning` 或者 `info`（默认值）。
 
 
-## `devServer.color` - CLI only
+## `devServer.color` - 仅命令行
 
 `boolean`
 
-Enables/Disables colors on the console.
+开启/关闭控制台的颜色
 
 ```bash
 webpack-dev-server --color
@@ -165,7 +162,7 @@ webpack-dev-server --color
 compress: true
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --compress
@@ -198,7 +195,7 @@ contentBase: [path.join(__dirname, "public"), path.join(__dirname, "assets")]
 contentBase: false
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --content-base /path/to/content/dir
@@ -209,13 +206,13 @@ webpack-dev-server --content-base /path/to/content/dir
 
 `boolean`
 
-When set to true this option bypasses host checking. THIS IS NOT RECOMMENDED as apps that do not check the host are vulnerable to DNS rebinding attacks.
+该选项设置为true时，将绕过主机检测，不推荐这么做，不检测主机容易受到DNS rebinding攻击。
 
 ```js
 disableHostCheck: true
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --disable-host-check
@@ -284,7 +281,7 @@ historyApiFallback: {
 }
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --history-api-fallback
@@ -303,7 +300,7 @@ webpack-dev-server --history-api-fallback
 host: "0.0.0.0"
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --host 0.0.0.0
@@ -320,20 +317,21 @@ webpack-dev-server --host 0.0.0.0
 hot: true
 ```
 
-T> Note that `webpack.HotModuleReplacementPlugin` is required to fully enable HMR. If `webpack` or `webpack-dev-server` are launched with the `--hot` option, this plugin will be added automatically, so you may not need to add this to your `webpack.config.js`. See the [HMR concepts page](/concepts/hot-module-replacement) for more information.
+T> 如果想完全使用HMR，`webpack.HotModuleReplacementPlugin`是必须的。如果`webpack`或`webpack-dev-server`靠`--hot`运行，这个插件将被自动的添加，所有你不需要在你的 `webpack.config.js`添加它。参见[HMR相关页面](/concepts/hot-module-replacement)获取更多信息。
 
 
 ## `devServer.hotOnly`
 
 `boolean`
 
+启用HMR（参见[`devServer.hot`](#devserver-hot)），但是在构建失败时不刷新页面。
 Enables Hot Module Replacement (see [`devServer.hot`](#devserver-hot)) without page refresh as fallback in case of build failures.
 
 ```js
 hotOnly: true
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --hot-only
@@ -362,13 +360,13 @@ https: {
 
 此对象直接传递到 Node.js HTTPS 模块，所以更多信息请查看 [HTTPS 文档](https://nodejs.org/api/https.html)。
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --https
 ```
 
-To pass your own certificate via the CLI use the following options
+在命令行中，使用以下选项传递你自己的签名证书。
 
 ```bash
 webpack-dev-server --https --key /path/to/server.key --cert /path/to/server.crt --cacert /path/to/ca.pem
@@ -378,18 +376,18 @@ webpack-dev-server --https --key /path/to/server.key --cert /path/to/server.crt 
 
 `string`
 
-The filename that is considered the index file.
+index文件的文件名
 
 ```javascript
 index: 'index.htm'
 ```
 
 
-## `devServer.info` - CLI only
+## `devServer.info` - 仅用于命令行
 
 `boolean`
 
-Output cli information. It is enabled by default.
+默认开启，在命令行显示信息
 
 ```bash
 webpack-dev-server --info=false
@@ -408,7 +406,7 @@ webpack-dev-server --info=false
 inline: false
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --inline=false
@@ -427,7 +425,7 @@ T> 推荐使用模块热替换的内联模式，因为它包含来自 websocket 
 lazy: true
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --lazy
@@ -453,13 +451,13 @@ noInfo: true
 
 `boolean`
 
-When `open` is enabled, the dev server will open the browser.
+当启用时，服务端会自动打开浏览器
 
 ```js
 open: true
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --open
@@ -727,13 +725,13 @@ setup(app){
 
 `string`
 
-The Unix socket to listen to (instead of a host).
+使用Unix socket文件作监听 (代替主机端口模式).
 
 ```js
 socket: 'socket'
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --socket socket
@@ -785,13 +783,13 @@ webpack-dev-server --stdin
 
 `boolean`
 
-This option lets the browser open with your local IP.
+该选项使浏览器用你本地的IP打开
 
 ```js
 useLocalIp: true
 ```
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --useLocalIp
@@ -802,15 +800,16 @@ webpack-dev-server --useLocalIp
 
 `boolean`
 
+服务端监视在`devServer.contentBase`设置的文件， 文件改变触发页面刷新。
 Tell the server to watch the files served by the `devServer.contentBase` option. File changes will trigger a full page reload.
 
 ```js
 watchContentBase: true
 ```
 
-It is disabled by default.
+默认启用
 
-Usage via the CLI
+通过命令行使用
 
 ```bash
 webpack-dev-server --watch-content-base
